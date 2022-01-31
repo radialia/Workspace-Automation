@@ -15,6 +15,8 @@ class WorkSpace:
         self.root = Tk()
         # App Title
         self.root.title("WorkSpace Automater")
+        # Set the window to unmaximisable
+        self.root.resizable(False, False)
 
         # App dimensiosn and screen dimesnions
         self.app_width, self.app_height = 455, 300
