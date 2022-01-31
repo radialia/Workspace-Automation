@@ -148,6 +148,9 @@ class WorkSpace:
             (By.XPATH, '//*[@id="repository-container-header"]/div[1]/div/h1/strong/a')))
         refreshButton.click()
 
+        # Open VS Code
+        os.system('code .')
+
         # Exit program
         sys.exit()
 
