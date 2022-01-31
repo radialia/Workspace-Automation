@@ -8,7 +8,6 @@ _WorkSpace Automation automates the whole task of initialising a project._
 ## _Installation_
 
 _Install WorkSpace Automation with npm with the `.exe` file_
-
 **_Exe file to be available soon!_**
     
 ## _Run Locally_
@@ -48,6 +47,11 @@ _**Server:** Selenium, Python Tkinter_
 ## _Lessons Learned_
 
 _I learned about web-scraing and automation. I also came to learn how to use Selenium and integrate it along with a GUI._
+
+
+## _License_
+
+_This project is [MIT](https://github.com/radialia/Workspace-Automation/blob/main/LICENSE) licensed._
 
 
 ## _Support_
