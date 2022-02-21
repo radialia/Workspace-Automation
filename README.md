@@ -5,6 +5,12 @@ _Creating a new project for any language requires the same procedure! Go upto [G
 
 _WorkSpace Automation automates the whole task of initialising a project._
 
+## _Demo_
+
+_Have a look how the app works!_
+
+https://user-images.githubusercontent.com/96730754/154963213-089d4b3a-371e-4a98-9151-8635f0f93553.mp4
+
 ## _Installation_
 
 _Install WorkSpace Automation with the `.exe` file_
