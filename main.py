@@ -81,8 +81,11 @@ class WorkSpace:
         self.repoName = self.repo.get()
         self.folderpath = self.path.get()
 
+        options = webdriver.ChromeOptions()
+        options.add_argument('user-agent = Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36')
+        self.driver = webdriver.Chrome(chrome_options=options, executable_path=r'chromedriver.exe')
+
         # Set driver and go to github.com
-        self.driver = webdriver.Chrome('chromedriver.exe')
         self.driver.get("https://www.github.com")
 
         # Click login
@@ -107,6 +110,7 @@ class WorkSpace:
 
         # Wait for 6 sec
         self.driver.implicitly_wait(6)
+        
 
         # Click on new repository
         newButton = WebDriverWait(self.driver, 10).until(expected_conditions.element_to_be_clickable(
