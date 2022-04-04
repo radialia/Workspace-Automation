@@ -21,7 +21,7 @@ class WorkSpace:
         self.root.resizable(False, False)
 
         # App dimensiosn and screen dimesnions
-        self.app_width, self.app_height = 455, 340
+        self.app_width, self.app_height = 455, 380
         self.screen_width, self.screen_height = self.root.winfo_screenwidth(
         ), self.root.winfo_screenheight()
 
@@ -55,47 +55,53 @@ class WorkSpace:
         self.repoLabel.place(x=30, y=147)
         self.repo.place(x=160, y=150)
 
+        self.descriptionLabel = Label(
+            self.root, text="Description", font=("Courier", 10, "bold"))
+        self.description = Entry(self.root, width=40)
+        self.descriptionLabel.place(x=30, y=187)
+        self.description.place(x=160, y=190)
+
         # Set app path
         self.pathLabel = Label(
             self.root, text="Folder Path", font=("Courier", 10, "bold"))
         self.path = Entry(self.root, width=35)
-        self.pathLabel.place(x=30, y=187)
-        self.path.place(x=130, y=190)
+        self.pathLabel.place(x=30, y=227)
+        self.path.place(x=130, y=230)
 
         # Get destination folder
         self.folderSelect = Button(
             self.root, text="Choose Folder", command=self.select)
-        self.folderSelect.place(x=350, y=187)
+        self.folderSelect.place(x=350, y=227)
 
         # Selectthe public / private option
         self.visibilityLabel = Label(
             self.root, text="Visibility", font=("Courier", 10, "bold"))
         self.RBttn = Radiobutton(self.root, text = "Public", variable = self.Var1,
                     value = 1)
-        self.RBttn.place(x=140, y=227)
+        self.RBttn.place(x=140, y=267)
         self.RBttn1 = Radiobutton(self.root, text = "Private", variable = self.Var1,
                     value = 2)
-        self.RBttn1.place(x=220, y=227)
-        self.visibilityLabel.place(x=30, y=227)
+        self.RBttn1.place(x=220, y=267)
+        self.visibilityLabel.place(x=30, y=267)
 
         # Create enter button
         self.button = Button(self.root, text="Enter", command=self.Automate)
-        self.button.place(x=self.app_width//2-20, y=265)
+        self.button.place(x=self.app_width//2-20, y=305)
 
         # Set app copyright
         self.copyright = Label(self.root, text="Copyright-2022 by Hardik Jaiswal",
                                font=("Times New Roman", 10, "italic"), relief=SUNKEN)
-        self.copyright.place(x=130, y=305)
+        self.copyright.place(x=130, y=345)
 
     def Automate(self):
         # Get values from all text inputs
         self.usrname = self.username.get()
         self.passw = self.password.get()
         self.repoName = self.repo.get()
+        self.descriptionName = self.description.get()
         self.folderpath = self.path.get()
 
         options = webdriver.ChromeOptions()
-        options.add_argument('user-agent = Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36')
         self.driver = webdriver.Chrome(chrome_options=options, executable_path=r'chromedriver.exe')
 
         # Set driver and go to github.com
@@ -135,6 +141,11 @@ class WorkSpace:
             By.XPATH, '//*[@id="repository_name"]')
         repositoryName.send_keys(self.repoName)
 
+        # Enter the repository descriptory
+        descName = self.driver.find_element(
+            By.XPATH, '//*[@id="repository_description"]')
+        descName.send_keys(self.descriptionName)
+
         # Click the public/private radio option
         buttonCode = self.getOption()
         if(buttonCode == 1):
@@ -164,7 +175,7 @@ class WorkSpace:
         # Push the code to github
         os.mkdir(f"{self.folderpath}/{self.repoName}")
         os.chdir(f"{self.folderpath}/{self.repoName}")
-        os.system(f'echo # {self.repoName} >> README.md')
+        os.system(f'echo # _{self.repoName}_ >> README.md')
         os.system("git init")
         os.system('git add README.md')
         os.system('git commit -m "first commit"')
