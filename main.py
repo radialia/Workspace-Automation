@@ -13,13 +13,15 @@ class WorkSpace:
     def __init__(self):
         # Base App
         self.root = Tk()
+        self.Var1 = IntVar()
         # App Title
         self.root.title("WorkSpace Automater")
+        self.root.iconphoto(False, PhotoImage(file='favicon.ico'))
         # Set the window to unmaximisable
         self.root.resizable(False, False)
 
         # App dimensiosn and screen dimesnions
-        self.app_width, self.app_height = 455, 300
+        self.app_width, self.app_height = 455, 340
         self.screen_width, self.screen_height = self.root.winfo_screenwidth(
         ), self.root.winfo_screenheight()
 
@@ -65,14 +67,25 @@ class WorkSpace:
             self.root, text="Choose Folder", command=self.select)
         self.folderSelect.place(x=350, y=187)
 
+        # Selectthe public / private option
+        self.visibilityLabel = Label(
+            self.root, text="Visibility", font=("Courier", 10, "bold"))
+        self.RBttn = Radiobutton(self.root, text = "Public", variable = self.Var1,
+                    value = 1)
+        self.RBttn.place(x=140, y=227)
+        self.RBttn1 = Radiobutton(self.root, text = "Private", variable = self.Var1,
+                    value = 2)
+        self.RBttn1.place(x=220, y=227)
+        self.visibilityLabel.place(x=30, y=227)
+
         # Create enter button
         self.button = Button(self.root, text="Enter", command=self.Automate)
-        self.button.place(x=self.app_width//2-20, y=225)
+        self.button.place(x=self.app_width//2-20, y=265)
 
         # Set app copyright
         self.copyright = Label(self.root, text="Copyright-2022 by Hardik Jaiswal",
                                font=("Times New Roman", 10, "italic"), relief=SUNKEN)
-        self.copyright.place(x=130, y=270)
+        self.copyright.place(x=130, y=305)
 
     def Automate(self):
         # Get values from all text inputs
@@ -122,6 +135,13 @@ class WorkSpace:
             By.XPATH, '//*[@id="repository_name"]')
         repositoryName.send_keys(self.repoName)
 
+        # Click the public/private radio option
+        buttonCode = self.getOption()
+        if(buttonCode == 1):
+            self.driver.find_element(By.XPATH, '//*[@id="repository_visibility_public"]').click()
+        else:
+            self.driver.find_element(By.XPATH, '//*[@id="repository_visibility_private"]').click()
+
         # Wait for 6 sec again
         self.driver.implicitly_wait(6)
 
@@ -130,9 +150,12 @@ class WorkSpace:
             (By.XPATH, '//*[@id="new_repository"]/div[4]/button')))
         createButton.click()
 
+        # wait for 10 seconds again
+        self.driver.implicitly_wait(10)
+
         # Copy the remote file origin url
         copyButton = self.driver.find_element(
-            By.XPATH, '//*[@id="repo-content-pjax-container"]/git-clone-help/div[1]/div/div[4]/div/span/span/clipboard-copy')
+            By.XPATH, '//*[@id="repo-content-pjax-container"]/div/git-clone-help/div[1]/div/div[4]/div/span/span/clipboard-copy')
         copyButton.click()
 
         # Get the remote origin file url
@@ -165,6 +188,10 @@ class WorkSpace:
         folder_path = filedialog.askdirectory()
         self.path.delete(0, END)
         self.path.insert(0, folder_path)
+
+    def getOption(self):
+        # Get the radio button which is checked
+        return self.Var1.get()
 
     def run(self):
         # run the app
